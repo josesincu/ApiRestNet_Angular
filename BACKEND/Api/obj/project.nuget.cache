@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "2lAcyrklRhETR/VkUFO7jIskD7gPtPLajN+frH+uy2ty0RNGo90GZi1ryEFFZ6EZgYrkvdclmutXzjvEMenvFA==",
+  "dgSpecHash": "OxHhHQBxTS0yllBL/45mfTw+kl30N9kvDemouDJ5TEscz7hvcJbGkLZJ711zteS+jIplKkw9OreJUZANA5ejPw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Ghost\\Documents\\ProyectosC#\\Api\\Api\\Api.csproj",
+  "projectFilePath": "C:\\Users\\Ghost\\Downloads\\Borrar\\ApiRestNet_Angular\\BACKEND\\Api\\Api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Ghost\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\Ghost\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",

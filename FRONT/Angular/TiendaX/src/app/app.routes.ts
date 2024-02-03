@@ -14,6 +14,14 @@ export const routes: Routes = [
     {
         path:'reporte',
         component : ReportesComponent
+    },
+    {
+        path:'',
+        component : ProveedorComponent
+    },
+    {
+        path:'**',
+        component : ProveedorComponent
     }
 
 ];

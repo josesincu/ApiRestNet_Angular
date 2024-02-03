@@ -1,64 +1,88 @@
-go
-use TiendaX
-
-/************************* VALIDAMOS SI EXISTE EL PROCEDIMIENTO PRODUCTO ************************/
-
-go
-
-IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'producto_registrar')
-DROP PROCEDURE producto_registrar
-
-go
-
-IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'producto_modificar')
-DROP PROCEDURE producto_modificar
-
-go
-
-IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'producto_obtener')
-DROP PROCEDURE producto_obtener
-
-go
-
-IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'producto_listar')
-DROP PROCEDURE producto_listar
-
-go
-
-IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'producto_eliminar')
-DROP PROCEDURE producto_eliminar
-
-go
-
-IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'reporte_proveedor_producto')
-DROP PROCEDURE reporte_proveedor_producto
-
-go
+/**
+*
+*	USAMOS NUESTRA BASES DE DATOS
+*
+*/
+GO
+USE TiendaX
 
 
-IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'reporte_producto')
-DROP PROCEDURE reporte_producto
+/*
+*
+*  SE BORRAN LOS PROCEDIMIENTOS ALMACENADOS PARA PRODUCTO
+*  LAS CUALES SON:
+*	PRODUCTO_REGISTRAR
+*	PRODUCTO_MODIFICAR
+*	PRODUCTO_OBTENER
+*	PRODUCTO_LISTAR
+*	PRODUCTO_ELIMINAR
+*	REPORTE_PROVEEDOR_PRODUCTO
+*	REPORTE_PRODUCTO
+*
+*/
 
-go
+GO
 
-/************************* PROCEDIMIENTOS PARA CREAR PRODCUTO ************************/
-create procedure producto_registrar(
-	@IdProducto int,
-	@IdMarca int,
-	@IdPresentacion int,
-	@IdProveedor int,
-	@IdZona int,
-	@Codigo int,
-	@DescripcionProducto varchar(1000),
-	@Precio float,
-	@Stock int,
-	@Iva int,
-	@Peso float
+IF EXISTS (SELECT * FROM sys.objects WHERE TYPE = 'P' AND NAME = 'producto_registrar')
+	DROP PROCEDURE producto_registrar
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE TYPE = 'P' AND NAME = 'producto_modificar')
+	DROP PROCEDURE producto_modificar
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE TYPE = 'P' AND NAME = 'producto_obtener')
+	DROP PROCEDURE producto_obtener
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE TYPE = 'P' AND NAME = 'producto_listar')
+	DROP PROCEDURE producto_listar
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE TYPE = 'P' AND NAME = 'producto_eliminar')
+	DROP PROCEDURE producto_eliminar
+
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE TYPE = 'P' AND NAME = 'reporte_proveedor_producto')
+	DROP PROCEDURE reporte_proveedor_producto
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE TYPE = 'P' AND NAME = 'reporte_producto')
+	DROP PROCEDURE reporte_producto
+GO
+
+/*
+*
+*  SE CREAN LOS PROCEDIMIENTOS ALMACENADOS PARA PRODUCTO
+*  CON SUS RESPECTIVOS PARAMETROS LAS CUALES SON:
+*	PRODUCTO_REGISTRAR
+*	PRODUCTO_MODIFICAR
+*	PRODUCTO_OBTENER
+*	PRODUCTO_LISTAR
+*	PRODUCTO_ELIMINAR
+*	REPORTE_PROVEEDOR_PRODUCTO
+*	REPORTE_PRODUCTO
+*
+*/
+
+CREATE PROCEDURE producto_registrar(
+	@IdProducto INT,
+	@IdMarca INT,
+	@IdPresentacion INT,
+	@IdProveedor INT,
+	@IdZona INT,
+	@Codigo INT,
+	@DescripcionProducto VARCHAR(1000),
+	@Precio FLOAT,
+	@Stock INT,
+	@Iva INT,
+	@Peso FLOAT
 )
-as
-begin
+AS
+BEGIN
 
-insert into producto(
+INSERT INTO producto(
 	id_producto,
 	id_marca,
 	id_presentacion,
@@ -71,7 +95,7 @@ insert into producto(
 	iva,
 	peso
 	)
-values
+VALUES
 (
 	@IdProducto,
 	@IdMarca,
@@ -85,27 +109,30 @@ values
 	@Iva,
 	@Peso
 )
-end
-go
+END
+GO
 
-/* modificar producto */
-create procedure producto_modificar(
-	@IdProducto int,
-	@IdMarca int,
-	@IdPresentacion int,
-	@IdProveedor int,
-	@IdZona int,
-	@Codigo int,
-	@DescripcionProducto varchar(1000),
-	@Precio float,
-	@Stock int,
-	@Iva int,
-	@Peso float
+/*
+*	MODIFICAMOS EL PRODUCTO 
+*/
+
+CREATE PROCEDURE producto_modificar(
+	@IdProducto INT,
+	@IdMarca INT,
+	@IdPresentacion INT,
+	@IdProveedor INT,
+	@IdZona INT,
+	@Codigo INT,
+	@DescripcionProducto VARCHAR(1000),
+	@Precio FLOAT,
+	@Stock INT,
+	@Iva INT,
+	@Peso FLOAT
 )
-as
-begin
+AS
+BEGIN
 
-update producto set 
+UPDATE producto SET 
 	id_marca = @IdMarca,
 	id_presentacion = @IdPresentacion,
 	id_proveedor = @IdProveedor,
@@ -116,187 +143,235 @@ update producto set
 	stock = @Stock,
 	iva = @Iva,
 	peso = @Peso
-where id_producto = @IdProducto
-end
-go
+WHERE id_producto = @IdProducto
+END
+GO
 
-/* obtener un producto*/
-create procedure producto_obtener(@IdProducto int)
-as
-begin
+/*
+*
+* OBTENEMOS UN PRODUCTO RECIBE COMO PARAMETRO UN INT ID
+*/
 
-select * from producto where id_producto = @IdProducto
-end
-
-
-
-/* Listar todos los productos */
-go
-create procedure producto_listar
-as
-begin
-	select * from producto
-end
-go
-
-
-/* eliminar producto */
-go
-
-create procedure producto_eliminar(
-	@IdProducto int
+CREATE PROCEDURE producto_obtener(
+	@IdProducto INT
 )
-as
-begin
-
-delete from producto where id_producto = @IdProducto
-
-end
-
-go
+AS
+BEGIN
+	SELECT * FROM producto WHERE id_producto = @IdProducto
+END
+GO
 
 
+/*
+*
+*	LISTAMOS TODOS LOS PRODUCTOS
+*
+*/
 
-/************************* VALIDAMOS SI EXISTE EL PROCEDIMIENTO PROVEEDOR ************************/
-go
+CREATE PROCEDURE producto_listar
+AS
+BEGIN
+	SELECT * FROM producto
+END
+GO
 
-IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'proveedor_registrar')
-DROP PROCEDURE proveedor_registrar
 
-go
+/* *
+*
+*	ELIMINAMOS UN PRODUCTO RECIBE PARAMETRO ID 
+*/
 
-IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'proveedor_modificar')
-DROP PROCEDURE proveedor_modificar
-
-go
-
-IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'proveedor_obtener')
-DROP PROCEDURE proveedor_obtener
-
-go
-
-IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'proveedor_listar')
-DROP PROCEDURE proveedor_listar
-
-go
-
-IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'proveedor_eliminar')
-DROP PROCEDURE proveedor_eliminar
-
-go
-
-/************************* PROCEDIMIENTOS PARA CREAR PROVEEDOR ************************/
-create procedure proveedor_registrar(
-	@IdProveedor int,
-	@Descripcion varchar(100)
+CREATE PROCEDURE producto_eliminar(
+	@IdProducto INT
 )
-as
-begin
+AS
+BEGIN
+	DELETE FROM producto WHERE id_producto = @IdProducto
+END
+GO
 
-insert into proveedor(
+
+
+
+
+/*
+*
+* BORRAMOS  CUALQUIER PROCEDIMIENTO PROVEEDOR PODRIA 
+* DAR CONFLICTO DESPUES SI EXISTE DOS IGUALES:
+* PROVEEDOR_REGISTRAR
+*  PROVEEDOR_MODIFICAR
+*  PROVEEDOR_OBTENER
+*  PROVEEDOR_LISTAR
+*  PROVEEDOR_ELIMINAR
+*
+*/
+
+IF EXISTS (SELECT * FROM sys.objects WHERE TYPE = 'P' AND NAME = 'proveedor_registrar')
+	DROP PROCEDURE proveedor_registrar
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE TYPE = 'P' AND NAME = 'proveedor_modificar')
+	DROP PROCEDURE proveedor_modificar
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE TYPE = 'P' AND NAME = 'proveedor_obtener')
+	DROP PROCEDURE proveedor_obtener
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE TYPE = 'P' AND NAME = 'proveedor_listar')
+	DROP PROCEDURE proveedor_listar
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE TYPE = 'P' AND NAME = 'proveedor_eliminar')
+	DROP PROCEDURE proveedor_eliminar
+GO
+
+
+/*
+*
+* CREAMOS CUALQUIER PROCEDIMIENTO PROVEEDOR CON SUS
+* RESPECTIVOS PARAMETROS
+* PROVEEDOR_REGISTRAR
+*  PROVEEDOR_MODIFICAR
+*  PROVEEDOR_OBTENER
+*  PROVEEDOR_LISTAR
+*  PROVEEDOR_ELIMINAR
+*
+*/
+
+CREATE PROCEDURE proveedor_registrar(
+	@IdProveedor INT,
+	@Descripcion VARCHAR(100)
+)
+AS
+BEGIN
+INSERT INTO proveedor(
 	id_proveedor,
 	descripcion
-	)
-values
+)
+VALUES
 (
 	@IdProveedor,
 	@Descripcion
 )
-end
-go
+END
+GO
 
-/* modificar producto */
-create procedure proveedor_modificar(
-	@IdProveedor int,
-	@Descripcion varchar(100)
+/* 
+*	MODIFICAR PROVEEDOR 
+*
+*/
+
+CREATE PROCEDURE proveedor_modificar(
+	@IdProveedor INT,
+	@Descripcion VARCHAR(100)
 )
-as
-begin
+AS
+BEGIN
+	UPDATE proveedor SET 
+		descripcion = @Descripcion
+	WHERE id_proveedor = @IdProveedor
+END
+GO
 
-update proveedor set 
-	descripcion = @Descripcion
-where id_proveedor = @IdProveedor
-end
-go
+/*
+*
+* OBTENEMOS UN PROVEEDOR POR SU ID
+*
+*/
 
-/* obtener un producto*/
-create procedure proveedor_obtener(@IdProveedor int)
-as
-begin
+CREATE PROCEDURE proveedor_obtener(@IdProveedor INT)
+AS
+BEGIN
+	SELECT * FROM proveedor WHERE id_proveedor = @IdProveedor
+END
+GO
+/*
+*
+* OBTENEMOS UNA LISTA DE PROVEEDORES
+* 
+*/
 
-select * from proveedor where id_proveedor = @IdProveedor
-end
-
-/* Listar todos los productos */
-go
-create procedure proveedor_listar
-as
-begin
-	select * from proveedor
-end
-go
+CREATE PROCEDURE proveedor_listar
+AS
+BEGIN
+	SELECT * FROM proveedor
+END
+GO
 
 
-/* eliminar producto */
-go
+/*
+*
+* ELIMINAMOS UN PROVEEDOR POR SU ID
+*
+*/
 
-create procedure proveedor_eliminar(
-	@IdProveedor int
+CREATE PROCEDURE proveedor_eliminar(
+	@IdProveedor INT
 )
-as
-begin
-
-delete from proveedor where id_proveedor = @IdProveedor
-
-end
-
-go
+AS
+BEGIN
+	DELETE FROM proveedor WHERE id_proveedor = @IdProveedor
+END
+GO
 
 
-/* Reporte de proveedor y product total */
-go
-create procedure reporte_proveedor_producto
-as
-begin
-	select prov.descripcion as proveedor,sum(stock) AS total
-	from producto prod
-	inner join proveedor prov on prov.id_proveedor = prod.id_proveedor 
-	group by prov.descripcion
-end
-go
+/*
+*
+* GENERACION DE REPORTE PARA PROVEEDOR:
+* REPORTE_PRODUCTO Y PRODUCTO
+* REPORTE_PRODUCTO
+*/
 
-/* Reporte Producto */
+CREATE PROCEDURE reporte_proveedor_producto
+AS
+BEGIN
+	SELECT prov.descripcion AS proveedor,SUM(stock) AS total
+	FROM producto prod
+	INNER JOIN proveedor prov ON prov.id_proveedor = prod.id_proveedor 
+	GROUP BY prov.descripcion
+END
+GO
 
-go
-create procedure reporte_producto
-as
-begin
-	select 
-		prov.descripcion as PROVEEDOR,
-		pres.descripcion as PRESENTACION,
-		ma.descripcion as MARCA,
-		zo.descripcion as ZONA,
-		prod.codigo as CODIGO,
-		prod.descripcion_producto as DESCRIPCION,
+/*
+* CREACION PROCEDIMIENTO reporte_producto
+*/
+
+CREATE PROCEDURE reporte_producto
+AS
+BEGIN
+	SELECT 
+		prov.descripcion AS PROVEEDOR,
+		pres.descripcion AS PRESENTACION,
+		ma.descripcion AS MARCA,
+		zo.descripcion AS ZONA,
+		prod.codigo AS CODIGO,
+		prod.descripcion_producto AS DESCRIPCION,
 		prod.precio AS PRECIO,
 		prod.stock AS STOCK,
 		prod.iva AS IVA,
 		prod.peso AS PESO
-	from producto prod
-		inner join proveedor prov on prod.id_proveedor = prov.id_proveedor   
-		inner join presentacion pres on prod.id_presentacion = pres.id_presentacion    
-		inner join marca ma on prod.id_marca = ma.id_marca   
-		inner join zona zo on prod.id_zona = zo.id_zona
-end
-go
+	FROM producto prod
+		INNER JOIN proveedor prov ON prod.id_proveedor = prov.id_proveedor   
+		INNER JOIN presentacion pres ON prod.id_presentacion = pres.id_presentacion    
+		INNER JOIN marca ma ON prod.id_marca = ma.id_marca   
+		INNER JOIN zona zo ON prod.id_zona = zo.id_zona
+END
+GO
 
-/**********************************************************************************/
+/*FIN DE PROCEDIMIENTOS ALMACENADOS */
+
+
+
+/*
+*
+*	EXTRAS EJECUCION DE PROCEDIMIENTOS
+*
+*
+*/
 
 exec producto_listar;
-
-select * from proveedor
 exec proveedor_registrar @IdProveedor = 5,@Descripcion = NULL;
-
 exec producto_registrar 
 @IdProducto= 5, 
 @IdMarca = null,
@@ -310,10 +385,12 @@ exec producto_registrar
 @Iva = NULL,
 @Peso = null;
 
-select * from producto;
-select * from proveedor;
 
-/* REPORTE GENERAL */
+
+/*
+* 
+* SCRIP PARA GENERARL REPORTES
+*/
 select 
 	prov.descripcion as PROVEEDOR,
 	pres.descripcion as PRESENTACION,
@@ -348,7 +425,7 @@ from producto prod
 inner join proveedor prov on prod.id_proveedor = prov.id_proveedor   
 inner join presentacion pres on prod.id_presentacion = pres.id_presentacion    
 inner join marca ma on prod.id_marca = ma.id_marca   
-inner join zona zo on prod.id_zona = zo.id_zona    ;
+inner join zona zo on prod.id_zona = zo.id_zona;
 
 /* REPORTE PROVEEDOR Y PRODUCTO */
 select prov.descripcion as proveedor,sum(stock) AS total
@@ -357,7 +434,150 @@ inner join proveedor prov on prov.id_proveedor = prod.id_proveedor
 group by prov.descripcion
 ;
 
-select * from producto
 
-exec reporte_proveedor_producto
-exec reporte_producto
+
+
+/*******************************************************************************************************/
+/*Laptop HP Pavilion
+
+Proveedor: TechWorld Distributors
+Marca: HP
+Presentación: 15.6 pulgadas
+Zona: Internacional*/
+INSERT INTO proveedor(id_proveedor,descripcion) VALUES (1,'TechWorld Distributors');
+INSERT INTO marca(id_marca,descripcion) VALUES (1,'HP');
+INSERT INTO presentacion(id_presentacion,descripcion) VALUES (1,'15.6 pulgadas');
+INSERT INTO zona(id_zona,descripcion) VALUES (1,'Internaciona');
+
+/*
+Café Arabica Premium
+
+Proveedor: Global Coffee Importers
+Marca: BeanElegance
+Presentación: Bolsa de 500g
+Zona: América Latina
+*/
+
+INSERT INTO proveedor(id_proveedor,descripcion) VALUES (2,'Global Coffee Importers');
+INSERT INTO marca(id_marca,descripcion) VALUES (2,'BeanElegance');
+INSERT INTO presentacion(id_presentacion,descripcion) VALUES (2,'Bolsa de 500g');
+INSERT INTO zona(id_zona,descripcion) VALUES (2,'América Latina');
+
+/*
+Zapatillas Deportivas Nike Air Max
+
+Proveedor: Athletic Gear Suppliers
+Marca: Nike
+Presentación: Tallas variadas
+Zona: Norteamérica
+*/
+
+INSERT INTO proveedor(id_proveedor,descripcion) VALUES (3,'Athletic Gear Suppliers');
+INSERT INTO marca(id_marca,descripcion) VALUES (3,'Nike');
+INSERT INTO presentacion(id_presentacion,descripcion) VALUES (3,'Tallas variadas');
+INSERT INTO zona(id_zona,descripcion) VALUES (3,' Norteamérica');
+
+/*
+Aceite de Oliva Extra Virgen
+
+Proveedor: Olive Grove Farms
+Marca: PureGold
+Presentación: Botella de 1 litro
+Zona: Europa
+*/
+
+INSERT INTO proveedor(id_proveedor,descripcion)			VALUES (4,'Olive Grove Farms');
+INSERT INTO marca(id_marca,descripcion)					VALUES (4,'PureGold');
+INSERT INTO presentacion(id_presentacion,descripcion)	VALUES (4,'Botella de 1 litro');
+INSERT INTO zona(id_zona,descripcion)					VALUES (4,'Europa');
+
+/*
+Televisor LED Samsung Smart TV
+
+Proveedor: Electronics Hub
+Marca: Samsung
+Presentación: 55 pulgadas
+Zona: Asia
+*/
+
+INSERT INTO proveedor(id_proveedor,descripcion)			VALUES (5,'Electronics Hub');
+INSERT INTO marca(id_marca,descripcion)					VALUES (5,'Samsung');
+INSERT INTO presentacion(id_presentacion,descripcion)	VALUES (5,'55 pulgadas');
+INSERT INTO zona(id_zona,descripcion)					VALUES (5,'Asia');
+
+/*
+Libro "Cien años de soledad"
+
+Proveedor: Book Haven Publishers
+Marca: García Márquez Ediciones
+Presentación: Tapa dura
+Zona: Internacional
+*/
+
+INSERT INTO proveedor(id_proveedor,descripcion)			VALUES (6,'Book Haven Publishers');
+INSERT INTO marca(id_marca,descripcion)					VALUES (6,'García Márquez Ediciones');
+INSERT INTO presentacion(id_presentacion,descripcion)	VALUES (6,'Tapa dura');
+INSERT INTO zona(id_zona,descripcion)					VALUES (6,'Internacional');
+
+/*
+Juego de Mesa Monopoly
+
+Proveedor: FunPlay Games
+Marca: Hasbro
+Presentación: Edición clásica
+Zona: Norteamérica
+*/
+
+INSERT INTO proveedor(id_proveedor,descripcion)			VALUES (7,'FunPlay Games');
+INSERT INTO marca(id_marca,descripcion)					VALUES (7,'Hasbro');
+INSERT INTO presentacion(id_presentacion,descripcion)	VALUES (7,'Edición clásica');
+INSERT INTO zona(id_zona,descripcion)					VALUES (7,'Norteamérica');
+
+/*
+Silla de Oficina Ergonómica
+
+Proveedor: Office Furniture Solutions
+Marca: ErgoComfort
+Presentación: Negra con ajustes
+Zona: Europa
+
+*/
+INSERT INTO proveedor(id_proveedor,descripcion)			VALUES (8,'Office Furniture Solutions');
+INSERT INTO marca(id_marca,descripcion)					VALUES (8,'ErgoComfort');
+INSERT INTO presentacion(id_presentacion,descripcion)	VALUES (8,'Negra con ajustes');
+INSERT INTO zona(id_zona,descripcion)					VALUES (8,'Europa');
+
+/*
+Cámara Digital Canon EOS
+
+Proveedor: PhotoTech Suppliers
+Marca: Canon
+Presentación: Kit con lentes
+Zona: Asia
+*/
+
+INSERT INTO proveedor(id_proveedor,descripcion)			VALUES (9,'PhotoTech Suppliers');
+INSERT INTO marca(id_marca,descripcion)					VALUES (9,'Canon');
+INSERT INTO presentacion(id_presentacion,descripcion)	VALUES (9,'Kit con lentes');
+INSERT INTO zona(id_zona,descripcion)					VALUES (9,'Asia');
+
+/*
+Smartphone Samsung Galaxy
+
+Proveedor: Mobile Connect Solutions
+Marca: Samsung
+Presentación: Modelo S21
+Zona: Internacional
+
+*/
+
+INSERT INTO proveedor(id_proveedor,descripcion)			VALUES (10,'Mobile Connect Solutions');
+INSERT INTO marca(id_marca,descripcion)					VALUES (10,'Samsung');
+INSERT INTO presentacion(id_presentacion,descripcion)	VALUES (10,'Modelo S21');
+INSERT INTO zona(id_zona,descripcion)					VALUES (10,'Internacional');
+
+SELECT * FROM proveedor;
+SELECT * FROM marca;
+SELECT * FROM presentacion;
+SELECT * FROM zona;
+SELECT * FROM producto;
