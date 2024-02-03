@@ -1,0 +1,128 @@
+<body>
+    <div class="container">
+      <div class="row text-center mt-4">
+        <div class="col">
+          <img src="https://img.freepik.com/vector-premium/fachada-tienda-tienda-e-commerce-toldo-linea_25030-1443.jpg?size=626&ext=jpgs" alt=""
+            class="img-fluid" width="200px">
+        </div>
+      </div>
+      <div class="row text-center mt-5">
+        <div class="col">
+          <h2>CRUD PRODUCTO</h2>
+        </div>
+      </div>
+      <div class="row mt-5">
+        <div class="col-md-4">
+          <label for="txtId" class="from-label">* ID</label>
+          <input type="text" name="id" id="txtId" class="form-control" [(ngModel)]="producto.IdProducto">
+        </div>
+
+        <div class="col-md-4">
+          <label for="txtDesc" class="from-label">Marca</label>
+          <input type="text" name="id" id="txtMarca" class="form-control" [(ngModel)]="producto.IdMarca">
+        </div>
+
+        <div class="col-md-4">
+          <label for="txtDesc" class="from-label">Presentacion</label>
+          <input type="text" name="id" id="txtPresentacion" class="form-control" [(ngModel)]="producto.IdPresentacion">
+        </div>
+
+        <div class="col-md-4">
+          <label for="txtDesc" class="from-label">Proveedor</label>
+          <input type="text" name="id" id="txtProveedor" class="form-control" [(ngModel)]="producto.IdProveedor">
+        </div>
+
+        <div class="col-md-4">
+          <label for="txtDesc" class="from-label">Zona</label>
+          <input type="text" name="id" id="txtZona" class="form-control" [(ngModel)]="producto.IdZona">
+        </div>
+
+        <div class="col-md-4">
+          <label for="txtDesc" class="from-label">Codigo</label>
+          <input type="text" name="id" id="txtCodigo" class="form-control" [(ngModel)]="producto.Codigo">
+        </div>
+
+        <div class="col-md-4">
+          <label for="txtDesc" class="from-label">Descripcion</label>
+          <input type="text" name="id" id="txtDescripcion" class="form-control" [(ngModel)]="producto.DescripcionProducto">
+        </div>
+
+        <div class="col-md-4">
+          <label for="txtDesc" class="from-label">* Precio</label>
+          <input type="text" name="id" id="txtPrecio" class="form-control" [(ngModel)]="producto.Precio">
+        </div>
+
+        <div class="col-md-4">
+          <label for="txtDesc" class="from-label">* Stock </label>
+          <input type="text" name="id" id="txtStock" class="form-control" [(ngModel)]="producto.Stock">
+        </div>
+
+        <div class="col-md-4">
+          <label for="txtDesc" class="from-label">Iva</label>
+          <input type="text" name="id" id="txtIva" class="form-control" [(ngModel)]="producto.Iva">
+        </div>
+
+        <div class="col-md-4">
+          <label for="txtDesc" class="from-label">Peso</label>
+          <input type="text" name="id" id="txtPeso" class="form-control" [(ngModel)]="producto.Peso">
+        </div>
+
+
+
+      </div>
+      <div class="row mt-5">
+        <div class="col">
+          
+          <button class="btn btn-success" type="button" (click)="onAddProducto(producto)">Agregar</button>
+          <button class="btn btn-warning m-2" type="button" (click)="onUpdateProducto(producto)">Modificar</button>
+          <button class="btn btn-danger" type="button" (click)="onDeleteProducto(producto.IdProducto)">Eliminar</button>
+          <button class="btn btn-primary m-2" type="button" (click)="clear()">Limpiar</button>
+        
+        </div>
+        
+      </div>
+      <div class="row mt-5">
+        <div class="col">
+          <table id="dtMascota" class="table table-striped" style="width: 100%;">
+            <thead>
+              <tr>
+                <th>Seleccionar</th>
+                <th>IdProducto</th>
+                <th>IdMarca</th>
+                <th>IdPresentacion</th>
+                <th>IdProveedor</th>
+                <th>IdZona</th>
+                <th>Codigo</th>
+                <th>Descripcion</th>
+                <th>Precio</th>
+                <th>Stock</th>
+                <th>Iva</th>
+                <th>Peso</th>
+                
+              </tr>
+            </thead>
+            <tbody>
+              
+              <tr *ngFor="let item of datatable">
+                <td><input type="button" value="Seleccionar" (click)="onSetData(item)"></td>
+                <td> {{ item.idProducto }} </td>
+                <td>{{ item.idMarca }}</td>
+                <td>{{ item.idPresentacion }}</td>
+                <td>{{ item.idProveedor }}</td>
+                <td>{{ item.idZona }}</td>
+                <td>{{ item.codigo }}</td>
+                <td>{{ item.descripcion }}</td>
+                <td>{{ item.precio }}</td>
+                <td>{{ item.stock }}</td>
+                <td>{{ item.iva }}</td>
+                <td>{{ item.peso }}</td>
+                
+              </tr>
+            
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
+  
