@@ -21,4 +21,8 @@ ORDER BY z.descripcion, cantidad_productos DESC;
 
 
 ## VIDEO:
+### Minuto 0:00 - 19:30 Fin explicacion
+### Minuto 19:30 -30:00 ejecucion de crud
+
+## https://screenrec.com/share/mXPyERdrbu
 ## https://drive.google.com/drive/folders/1VKmw9Crr8sa71QqSTMxkoRC6Z8QfPNgB?usp=sharing
