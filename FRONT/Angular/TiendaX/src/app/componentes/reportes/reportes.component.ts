@@ -70,7 +70,7 @@ export class ReportesComponent  {
       }
     }
 
-    pdfMake.createPdf(dd).open();
+    pdfMake.createPdf(dd).download();
     
   }
 
@@ -122,7 +122,7 @@ export class ReportesComponent  {
       }
     }
 
-    pdfMake.createPdf(dd).open();
+    pdfMake.createPdf(dd).download();
     
   }
 
